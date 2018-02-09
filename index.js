@@ -87,4 +87,44 @@ class TodoApp extends React.Component{
 		}
 	}
 
+	class TodoApp extends React.Component{
+		constructor (props){
+			// Pass props to parent class
+			super(props);
+			// Set Initial state
+			this.state = {
+				data: []
+			}
+			this.apiUrl = 'https://57b1924b46b57d1100a3c3f8.mockapi.io/api/todos'
+		}
+		// Lifecycle method
+	}
+
+	this.setState()
+
+	 // Add todo handler
+  addTodo(val){
+    // Assemble data
+    const todo = {text: val}
+    // Update data
+    axios.post(this.apiUrl, todo)
+       .then((res) => {
+          this.state.data.push(res.data);
+          this.setState({data: this.state.data});
+       });
+  }
+  // Handle remove
+  handleRemove(id){
+    // Filter all todos except the one to be removed
+    const remainder = this.state.data.filter((todo) => {
+      if(todo.id !== id) return todo;
+    });
+    // Update state with filter
+    axios.delete(this.apiUrl+'/'+id)
+      .then((res) => {
+        this.setState({data: remainder});      
+      })
+  }
+  
+
 	ReactDOM.render(<TodoApp />, document.getElementById('container'));
